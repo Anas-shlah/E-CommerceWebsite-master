@@ -1,5 +1,5 @@
 // console.clear();
-const apiUrl = "http://localhost:8000/api/v1";
+const apiUrl = "https://nodejs-ecommerce-api-v1.onrender.com/api/v1";
 let contentTitle;
 
 console.log(document.cookie);
