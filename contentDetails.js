@@ -109,31 +109,6 @@ function dynamicContentDetails(ob) {
   return mainContainer;
 }
 
-// BACKEND CALLING
-
-// let httpRequest = new XMLHttpRequest();
-// {
-//   httpRequest.onreadystatechange = function () {
-//     if (this.readyState === 4 && this.status == 200) {
-//       console.log("connected!!");
-//       let contentDetails = JSON.parse(this.responseText);
-//       {
-//         console.log(contentDetails);
-//         dynamicContentDetails(contentDetails);
-//       }
-//     } else {
-//       console.log("not connected!");
-//     }
-//   };
-// }
-
-// httpRequest.open(
-//   "GET",
-//   "https://5d76bf96515d1a0014085cf9.mockapi.io/product/" + id,
-//   true
-// );
-// httpRequest.send();
-
 fetch(`${apiUrl}/products/${id}`)
   .then((response) => response.json())
   .then((data) => {
@@ -147,13 +122,3 @@ fetch(`${apiUrl}/products/${id}`)
       console.log("not connected!");
     }
   });
-
-// const requestOptions = {
-//   method: "GET",
-//   redirect: "follow"
-// };
-
-// fetch(`${apiUrl}/products/${id}`, requestOptions)
-//   .then((response) => response.text())
-//   .then((result) => console.log(result))
-//   .catch((error) => console.error(error));
