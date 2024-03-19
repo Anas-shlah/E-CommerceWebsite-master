@@ -2,7 +2,7 @@
 const apiUrl = "https://nodejs-ecommerce-api-v1.onrender.com/api/v1";
 let contentTitle;
 
-console.log(document.cookie);
+console.log('cookie: ', document.cookie);
 function dynamicClothingSection(ob) {
   let boxDiv = document.createElement("div");
   boxDiv.id = "box";
