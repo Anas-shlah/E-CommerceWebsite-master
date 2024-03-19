@@ -53,7 +53,7 @@ let containerAccessories = document.getElementById("containerAccessories");
 // mainContainer.appendChild(dynamicClothingSection('hello world!!'))
 
 // BACKEND CALLING
-fetch(`${apiUrl}/products`)
+fetch(`${apiUrl}/products?limit=5`)
   .then((response) => response.json())
   .then((data) => {
     // handle data here
