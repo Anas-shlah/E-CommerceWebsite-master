@@ -40,11 +40,10 @@ function dynamicClothingSection(ob) {
 //  TO SHOW THE RENDERED CODE IN CONSOLE
 
 let mainContainer = document.getElementById("mainContainer");
-let containerClothing = document.getElementById("containerClothing");
 let containerAccessories = document.getElementById("containerAccessories");
 
 // BACKEND CALLING
-fetch(`${apiUrl}/products`)
+fetch(`${apiUrl}/products?category=65f9cfafd54b851fc37f92d4`)
     .then((response) => response.json())
     .then((data) => {
         // handle data here
@@ -53,6 +52,6 @@ fetch(`${apiUrl}/products`)
 
         for (let i = 0; i < contentTitle.length; i++) {
 
-            containerClothing.appendChild(dynamicClothingSection(contentTitle[i]));
+            containerAccessories.appendChild(dynamicClothingSection(contentTitle[i]));
         }
     });

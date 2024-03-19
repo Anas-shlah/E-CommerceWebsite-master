@@ -53,7 +53,7 @@ let containerAccessories = document.getElementById("containerAccessories");
 // mainContainer.appendChild(dynamicClothingSection('hello world!!'))
 
 // BACKEND CALLING
-fetch(`${apiUrl}/products?limit=5`)
+fetch(`${apiUrl}/products?limit=5&category=65f9cfa0d54b851fc37f92ce`)
   .then((response) => response.json())
   .then((data) => {
     // handle data here
@@ -61,14 +61,22 @@ fetch(`${apiUrl}/products?limit=5`)
     const contentTitle = data.data;
 
     for (let i = 0; i < contentTitle.length; i++) {
-      if (contentTitle[i].isAccessory) {
+      containerClothing.appendChild(dynamicClothingSection(contentTitle[i]));
+    }
+  });
 
-        containerAccessories.appendChild(
-          dynamicClothingSection(contentTitle[i])
-        );
-      } else {
+// BACKEND CALLING
+fetch(`${apiUrl}/products?limit=5&category=65f9cfafd54b851fc37f92d4`)
+  .then((response) => response.json())
+  .then((data) => {
+    // handle data here
 
-        containerClothing.appendChild(dynamicClothingSection(contentTitle[i]));
-      }
+    const contentTitle = data.data;
+
+    for (let i = 0; i < contentTitle.length; i++) {
+      containerAccessories.appendChild(
+        dynamicClothingSection(contentTitle[i])
+      );
+
     }
   });

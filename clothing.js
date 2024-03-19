@@ -41,16 +41,16 @@ function dynamicClothingSection(ob) {
 
 
 let mainContainer = document.getElementById("mainContainer");
-let containerAccessories = document.getElementById("containerAccessories");
+let containerClothing = document.getElementById("containerClothing");
 
 // BACKEND CALLING
-fetch(`${apiUrl}/products`)
+fetch(`${apiUrl}/products?category=65f9cfa0d54b851fc37f92ce`)
     .then((response) => response.json())
     .then((data) => {
         const contentTitle = data.data;
-
+        console.log(contentTitle)
         for (let i = 0; i < contentTitle.length; i++) {
 
-            containerAccessories.appendChild(dynamicClothingSection(contentTitle[i]));
+            containerClothing.appendChild(dynamicClothingSection(contentTitle[i]));
         }
     });
