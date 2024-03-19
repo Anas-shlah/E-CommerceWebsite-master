@@ -1,3 +1,27 @@
+let id = location.search.split("?")[1];
+const apiUrl = "https://nodejs-ecommerce-api-v1.onrender.com/api/v1";
+
+console.log(id)
+if (id) {
+    fetch(`${apiUrl}/products/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+            // handle data here
+
+            const contentDetails = data.data;
+            console.log("contentDetails:", data.data);
+            if (contentDetails) {
+                document.getElementById('title').value = contentDetails.title;
+                document.getElementById('price').value = contentDetails.price;
+                document.getElementById('quantity').value = contentDetails.quantity;
+                document.getElementById('description').value = contentDetails.description;
+            } else {
+                console.log("not connected!");
+            }
+        });
+}
+
+
 document
     .getElementById("fileInput")
     .addEventListener("change", function (event) {

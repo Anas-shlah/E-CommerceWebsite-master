@@ -1,5 +1,6 @@
 console.clear();
 const apiUrl = "https://nodejs-ecommerce-api-v1.onrender.com/api/v1";
+const user = JSON.parse(getCookie('user'));
 
 let id = location.search.split("?")[1];
 console.log("id:", `${window.apiUrl}/products/${id}`);
@@ -26,16 +27,9 @@ function dynamicContentDetails(ob) {
   let productDetailsDiv = document.createElement("div");
   productDetailsDiv.id = "productDetails";
 
-  // console.log(productDetailsDiv);
-
   let h1 = document.createElement("h1");
   let h1Text = document.createTextNode(ob.title);
   h1.appendChild(h1Text);
-
-  // let h4 = document.createElement("h4");
-  // let h4Text = document.createTextNode(ob.brand);
-  // h4.appendChild(h4Text);
-  // console.log(h4);
 
   let detailsDiv = document.createElement("div");
   detailsDiv.id = "details";
@@ -75,23 +69,75 @@ function dynamicContentDetails(ob) {
 
   let buttonDiv = document.createElement("div");
   buttonDiv.id = "button";
+  if (user?.role != 'admin') {
+    let buttonTag = document.createElement("button");
+    buttonDiv.appendChild(buttonTag);
 
-  let buttonTag = document.createElement("button");
-  buttonDiv.appendChild(buttonTag);
+    buttonText = document.createTextNode("Add to Cart");
+    buttonTag.onclick = function () {
+      let order = id + " ";
+      let counter = 1;
+      if (document.cookie.indexOf(",counter=") >= 0) {
+        order = id + " " + document.cookie.split(",")[0].split("=")[1];
+        counter = Number(document.cookie.split(",")[1].split("=")[1]) + 1;
+      }
+      document.cookie = "orderId=" + order + ",counter=" + counter;
+      document.getElementById("badge").innerHTML = counter;
+      console.log(document.cookie);
+    };
+    buttonTag.appendChild(buttonText);
+  }
 
-  buttonText = document.createTextNode("Add to Cart");
-  buttonTag.onclick = function () {
-    let order = id + " ";
-    let counter = 1;
-    if (document.cookie.indexOf(",counter=") >= 0) {
-      order = id + " " + document.cookie.split(",")[0].split("=")[1];
-      counter = Number(document.cookie.split(",")[1].split("=")[1]) + 1;
+  if (user && user?.role == 'admin') {
+    let buttonEditTag = document.createElement("button");
+    buttonDiv.appendChild(buttonEditTag);
+
+    const buttonEditText = document.createTextNode("Edit Product");
+    buttonEditTag.onclick = function () {
+      '/addProduct.html'
+      location.href = `/addProduct.html?${id}`;
+      history.pushState(null, null, location.href);
+    };
+    buttonEditTag.appendChild(buttonEditText);
+  }
+
+  if (user && user?.role == 'admin') {
+    let buttonRemoveTag = document.createElement("button");
+    buttonDiv.appendChild(buttonRemoveTag);
+    buttonRemoveText = document.createTextNode("remove product");
+    buttonRemoveTag.appendChild(buttonRemoveText);
+    buttonRemoveTag.style.backgroundColor = 'red';
+    buttonRemoveTag.style.marginLeft = '10px';
+    buttonRemoveTag.onclick = function () {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${getCookie('token')}`);
+
+      const raw = "";
+
+      const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+
+      fetch(`${apiUrl}/products/${id}`, requestOptions)
+        .then((response) => response.text())
+        .then(result => {
+          if (result?.errors) {
+            if (result?.errors[0]?.type == 'field') {
+              alert(result?.errors[0]?.msg);
+            }
+          } else if (result?.status == 'fail') {
+            alert(result.message)
+          } else {
+            location.href = `/`;
+            history.pushState(null, null, location.href);
+          }
+        });
     }
-    document.cookie = "orderId=" + order + ",counter=" + counter;
-    document.getElementById("badge").innerHTML = counter;
-    console.log(document.cookie);
-  };
-  buttonTag.appendChild(buttonText);
+  }
+
 
   console.log(mainContainer.appendChild(imageSectionDiv));
   mainContainer.appendChild(imageSectionDiv);
@@ -122,3 +168,22 @@ fetch(`${apiUrl}/products/${id}`)
       console.log("not connected!");
     }
   });
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) {
+      let value = c.substring(name.length, c.length);
+      return value;
+    }
+  }
+
+  return "";
+}
