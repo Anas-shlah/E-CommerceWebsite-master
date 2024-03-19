@@ -145,6 +145,24 @@ body {
     transform: translateY(0);
 }
 
+.add-btn {
+    grid-column: span 2;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.add-btn a {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: black;
+    border-radius: 4px;
+}
+
+.add-btn i {
+    margin-right: 5px;
+}
+
 /* ----------------------------- MEDIA QUERY --------------------------- */
 
 @media(max-width: 1300px) {

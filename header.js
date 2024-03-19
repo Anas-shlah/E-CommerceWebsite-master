@@ -7,12 +7,16 @@ export function getCookie(cname) {
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
         }
+
         if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+            let value = c.substring(name.length, c.length);
+            return value;
         }
-        return "";
     }
-};
+
+    return "";
+}
+
 
 const token = getCookie('token');
 
@@ -44,10 +48,21 @@ if (token) {
     <a href="login.html"> <i> <button class="button-login " role="button">Login</button> </i> </a>`
 
 }
+if (token) {
+    document.getElementById('SignOutBtn').addEventListener('click', () => {
+        document.cookie = `token=; expires=Thu, Jan 01 1970 00:00:00 UTC; path=/;`;
+        document.cookie = `user=; expires=Thu, Jan 01 1970 00:00:00 UTC; path=/;`;
 
-document.getElementById('SignOutBtn').addEventListener('click', () => {
-    document.cookie = `token=; expires=Thu, Jan 01 1970 00:00:00 UTC; path=/;`;
-    document.cookie = `user=; expires=Thu, Jan 01 1970 00:00:00 UTC; path=/;`;
+        window.location.href = '/';
+    })
+}
 
-    window.location.href = '/';
-})
+const user = JSON.parse(getCookie('user'));
+console.log('get user ', user)
+if (user && user?.role == 'admin') {
+    document.getElementById('collection').innerHTML += `<div id="addProduct" class="add-btn">
+    <a href="addProduct.html"  style="color: white;">
+      <i class="fas fa-plus"></i> Add Product
+    </a>
+  </div>`
+}
