@@ -20,7 +20,7 @@ const token = getCookie('token');
 if (token) {
 
     // اخذ معلومات المستخدم من الكوكيز
-    const user = JSON.parse(getCookie('user'));
+    const user = getCookie('user');
 
     // تحقق اذا كان للمستخدم صورة
     if (user?.profileImg) {
@@ -30,10 +30,11 @@ if (token) {
    <img src="${user.profileImg}" class="user-img">`;
 
     } else {
-
         // عرض ايقونة المستخدم اذا لم تكن له صورة
+        // document.querySelector('#user').innerHTML += `
+        //  <a href="#"> <i class="fas fa-user-circle userIcon"></i></a> `;
         document.querySelector('#user').innerHTML += `
- <a href="#"> <i class="fas fa-user-circle userIcon"></i></a> `;
+        <i> <button id="SignOutBtn" class="button-login " role="button">Sign Out</button> </i> `
     }
 
 } else {
@@ -44,3 +45,9 @@ if (token) {
 
 }
 
+document.getElementById('SignOutBtn').addEventListener('click', () => {
+    document.cookie = `token=; expires=Thu, Jan 01 1970 00:00:00 UTC; path=/;`;
+    document.cookie = `user=; expires=Thu, Jan 01 1970 00:00:00 UTC; path=/;`;
+
+    window.location.href = '/';
+})
