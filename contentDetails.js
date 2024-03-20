@@ -1,6 +1,6 @@
 console.clear();
 const apiUrl = "https://nodejs-ecommerce-api-v1.onrender.com/api/v1";
-const user = JSON.parse(getCookie('user'));
+const user = getCookie('user') ? JSON.parse(getCookie('user')) : {};
 
 let id = location.search.split("?")[1];
 console.log("id:", `${window.apiUrl}/products/${id}`);
