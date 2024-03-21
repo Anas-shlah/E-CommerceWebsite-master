@@ -107,13 +107,13 @@ function handleSubmit() {
 
     // Request options
     const requestOptions = {
-        method: 'POST',
+        method: id ? 'PUT' : 'POST',
         headers: myHeaders,
         body: formdata
     };
 
     // Send request
-    fetch('https://nodejs-ecommerce-api-v1.onrender.com/api/v1/products', requestOptions)
+    fetch(`https://nodejs-ecommerce-api-v1.onrender.com/api/v1/products${id && '/' + id}`, requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result?.errors) {
