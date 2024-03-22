@@ -113,7 +113,7 @@ function handleSubmit() {
     };
 
     // Send request
-    fetch(`https://nodejs-ecommerce-api-v1.onrender.com/api/v1/products${id ? ('/' + id) : null}`, requestOptions)
+    fetch(`https://nodejs-ecommerce-api-v1.onrender.com/api/v1/products${id ? ('/' + id) : ''}`, requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result?.errors) {
